@@ -1,0 +1,18 @@
+
+<h2>
+  <%= @book.name %>
+</h2>
+
+<p>
+  <strong>【作者】</strong>
+  <%= @book.user.name %>
+</p>
+
+<strong>【内容简介】</strong>
+<br>
+<%= @book.intro %>
+
+<p><%= link_to '目录', "/chapters?book_id=#{@book.id}" %></p>
+
+<%= link_to 'Edit', edit_book_path(@book) %> |
+<%= link_to 'Back', books_path %>

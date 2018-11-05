@@ -1,0 +1,39 @@
+@import "bootstrap";
+@import "material_icons";
+ 
+.container {
+  width: 800px;
+}
+ 
+.content {
+  margin-top: 61px;
+}
+
+.chapter-content {
+  font-size: 18px;
+}
+
+.chapter-content br {
+   display: block;
+   margin: 10px 0;
+   line-height:22px;
+   content: " ";
+}
+
+.material-icons {
+    color: gray;
+}
+
+.login {
+    color: gray;
+    display: inline-block;
+}
+
+li.login a {
+    float: right;
+    padding: 15px 0 0 2px;
+}
+
+.nav-icon {
+    margin: 13px 0 0 0;
+}

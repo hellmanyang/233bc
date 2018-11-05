@@ -4,7 +4,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.1'
 
 # My gems
-gem 'yomu'
+gem 'yomu' # get text from docx
+gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap-generators', git: 'git://github.com/decioferreira/bootstrap-generators.git'
+gem 'devise'
+gem 'material_icons'
+gem 'kaminari' # paginate
+gem 'cancancan', '~> 2.0'
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

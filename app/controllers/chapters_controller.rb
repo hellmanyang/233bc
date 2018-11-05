@@ -1,17 +1,20 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
   require 'yomu'
 
   
   # GET /chapters
   # GET /chapters.json
   def index
-    @chapters = Chapter.all
+    @book = Book.find params[:book_id]
+    @chapters = Chapter.where( book_id: params[:book_id] )
   end
 
   # GET /chapters/1
   # GET /chapters/1.json
   def show
+     
   end
 
   # GET /chapters/new
@@ -26,22 +29,31 @@ class ChaptersController < ApplicationController
   # POST /chapters
   # POST /chapters.json
   def create
+    unless current_user.admin? == true
+      flash[:error] = "权限错误！"
+      redirect_to new_chapter_url
+      return false
+    end
     yomu = Yomu.new params[:chapter][:docfile]
     text = yomu.text.gsub(/(第.*?章.*?\n)/, '@@@\0###') + '@@@'
     titles = text.scan(/@@@(.*?)\n###/)
     contents = text.scan(/###(.*?)@@@/m)
+    original_count = Chapter.count
     
     titles.each_with_index do |title, key|
       @chapter = Chapter.new
       @chapter.title = title[0]
       @chapter.content = contents[key][0]
+      @chapter.book_id = params[:chapter][:book_id]
       @chapter.save
     end
     
+    updated_count = Chapter.count
+    
 
     respond_to do |format|
-      if @chapter.save
-        format.html { redirect_to '/chapters', notice: 'Chapter was successfully created.' }
+      if original_count < updated_count
+        format.html { redirect_to '/chapters' + "?book_id=#{params[:chapter][:book_id]}", notice: '成功添加章节！' }
         format.json { render :show, status: :created, location: @chapter }
       else
         format.html { render :new }
