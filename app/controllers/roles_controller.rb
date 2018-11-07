@@ -7,7 +7,7 @@ class RolesController < ApplicationController
   end
   
   def create
-    unless params[:token] == '37608635'
+    unless Digest::SHA256.base64digest(params[:token]) == 'r85EdBEQirsywLZN+qavrV2vKxD+rK1fQcoEGjbKicM='
       flash[:error] = '权限错误'
       redirect_to '/roles/new'
       return false
