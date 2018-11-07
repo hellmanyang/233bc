@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  # before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:show, :edit, :update, :destroy]
   # before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
   load_and_authorize_resource
 
@@ -12,6 +12,7 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    @chapters = @book.chapters
   end
 
   # GET /books/new

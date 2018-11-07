@@ -14,16 +14,18 @@
           <tr>
             <td>《<%= link_to book.name, book %>》</td>
             <td><%= book.user.name %></td>
-            <td><%= link_to 'Edit', edit_book_path(book) %></td>
-            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% if can? :manage, Book %>
+              <td><%= link_to 'Edit', edit_book_path(book) %></td>
+              <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
     
-    <br>
-    
-    <p><%= link_to '添加新书', new_book_path %></p>
+    <% if can? :manage, Book %>
+      <p><%= link_to "创建新书", new_book_path, {class: 'btn btn-primary'} %></p>
+    <% end %>
   </div>
   
 </div>

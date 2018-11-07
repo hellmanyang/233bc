@@ -12,7 +12,7 @@ class Ability
       if user.admin?
         can :manage, :all
       elsif user.vip?
-        can :read, :all
+        can :read, Chapter
       else
         can :read, Chapter, vip: nil
         can :read, Book

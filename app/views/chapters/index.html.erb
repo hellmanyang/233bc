@@ -13,9 +13,16 @@
       <tbody>
         <% @chapters.each_with_index do |chapter, index| %>
           <tr>
-            <td><%= link_to chapter.title, chapter %></td>
-            <td><%= link_to 'Edit', edit_chapter_path(chapter) %></td>
-            <td><%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= link_to chapter.title, chapter %>
+              <% if chapter.vip? %>
+                <i class="material-icons nav-icon md-12 lock">lock</i>
+              <% end %>
+            </td>
+            <% if can? :manage, chapter %>
+              <td><%= link_to 'Edit', edit_chapter_path(chapter) %></td>
+              <td><%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

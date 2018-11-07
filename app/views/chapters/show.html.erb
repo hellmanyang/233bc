@@ -1,13 +1,17 @@
 <h2>
   <%= @chapter.title %>
+<% if can? :manage, Chapter %>
+  <%= link_to 'Edit', edit_chapter_path(@chapter) %>
+<% end %>
 </h2>
+
 
 <nav>
   <ul class="pagination pg-blue">
     <% if @chapter.prev.present? %>
       <li class="page-item"><a href="/chapters/<%= @chapter.prev.id %>" class="page-link">上一页</a></li>
     <% end %>
-    <li class="page-item"><a class="page-link" href="/chapters?book_id=<%= @chapter.book.id %>">目录</a></li>
+    <li class="page-item"><a class="page-link" href="/books/<%= @chapter.book.id %>">目录</a></li>
     <% if @chapter.next.present? %>
       <li class="page-item"><a href="/chapters/<%= @chapter.next.id %>" class="page-link">下一页</a></li>
     <% end %>
@@ -17,9 +21,6 @@
 <div class="chapter-content">
   <%= simple_format @chapter.content %>
 </div>
-
-<%= link_to 'Edit', edit_chapter_path(@chapter) %> |
-<%= link_to 'Back', chapters_path %>
 
 <nav>
   <ul class="pagination pg-blue">

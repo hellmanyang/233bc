@@ -1,6 +1,7 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  # before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  load_and_authorize_resource
   require 'yomu'
 
   
@@ -29,11 +30,11 @@ class ChaptersController < ApplicationController
   # POST /chapters
   # POST /chapters.json
   def create
-    unless current_user.admin? == true
-      flash[:error] = "权限错误！"
-      redirect_to new_chapter_url
-      return false
-    end
+    # unless current_user.admin? == true
+    #   flash[:error] = "权限错误！"
+    #   redirect_to new_chapter_url
+    #   return false
+    # end
     yomu = Yomu.new params[:chapter][:docfile]
     text = yomu.text.gsub(/(第.*?章.*?\n)/, '@@@\0###') + '@@@'
     titles = text.scan(/@@@(.*?)\n###/)
@@ -66,6 +67,20 @@ class ChaptersController < ApplicationController
   # PATCH/PUT /chapters/1.json
   def update
     respond_to do |format|
+      if params['chapter']['vip'] == '1'
+        chapters = @chapter.book.chapters
+        chapters.each do |c|
+          if c.id < @chapter.id
+            c.vip = nil
+          end
+          if c.id >= @chapter.id
+            c.vip = true 
+          end
+          
+          c.save!
+        end
+      end
+        
       if @chapter.update(chapter_params)
         format.html { redirect_to @chapter, notice: 'Chapter was successfully updated.' }
         format.json { render :show, status: :ok, location: @chapter }
@@ -81,7 +96,7 @@ class ChaptersController < ApplicationController
   def destroy
     @chapter.destroy
     respond_to do |format|
-      format.html { redirect_to chapters_url, notice: 'Chapter was successfully destroyed.' }
+      format.html { redirect_to "/books/#{@chapter.book_id}", notice: 'Chapter was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

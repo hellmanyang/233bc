@@ -11,7 +11,7 @@ gem 'devise'
 gem 'material_icons'
 gem 'kaminari' # paginate
 gem 'cancancan', '~> 2.0'
-
+gem 'multi_logger'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

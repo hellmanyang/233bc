@@ -12,7 +12,44 @@
 <br>
 <%= @book.intro %>
 
-<p><%= link_to '目录', "/chapters?book_id=#{@book.id}" %></p>
+<div class="row">
+  <div class="col-md-6">
+    
+    <% if can? :manage, Chapter %>
+      <%= link_to '添加新章', new_chapter_path, class: 'btn btn-primary' %>
+      <%= link_to '编辑书籍', edit_book_path(@book), class: 'btn btn-primary' %>
+    <% end %>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @chapters.each_with_index do |chapter, index| %>
+          <tr>
+            <td>
+              <%= link_to chapter.title, chapter %>
+              <% if chapter.vip? %>
+                <i class="material-icons nav-icon md-12 lock">lock</i>
+              <% end %>
+            </td>
+            <% if can? :manage, Chapter %>
+              <td><%= link_to 'Edit', edit_chapter_path(chapter) %></td>
+              <td><%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    
+  </div>
+  
+  <div class="col-md-6"></div>
+</div>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+
