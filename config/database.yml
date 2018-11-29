@@ -1,23 +1,23 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: hellman233bc2
+  database: bc233_development
   pool: 5
-  username: hellman233bc2
-  password: zmg2hizx
+  username: postgres
+  password: 1]vASfa*RrW)qAa.
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: hellman233bc2
+  database: bc233_test
   pool: 5
-  username: hellman233bc2
-  password: zmg2hizx
+  username: postgres
+  password: 1]vASfa*RrW)qAa.
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: hellman233bc2
+  database: bc233_production
   pool: 5
-  username: hellman233bc2
-  password: zmg2hizx
+  username: postgres
+  password: 1]vASfa*RrW)qAa.

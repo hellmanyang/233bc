@@ -9,7 +9,7 @@ class ChaptersController < ApplicationController
   # GET /chapters.json
   def index
     @book = Book.find params[:book_id]
-    @chapters = Chapter.where( book_id: params[:book_id] )
+    @chapters = Chapter.where( book_id: params[:book_id] ).order(:created_at)
   end
 
   # GET /chapters/1
